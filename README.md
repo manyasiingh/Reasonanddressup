@@ -71,12 +71,16 @@ Creativity is defined the way creativity research usually defines it: **novel *a
 
 The hardest constraints were counting colours (the two-colour brief was met only 12% of the time) and summing warmth (46%).
 
-## Visual outputs
+## Live demo
 
-The repo builds two self-contained HTML pages from a finished run:
+**▶ [manyasiingh.github.io/Reasonanddressup](https://manyasiingh.github.io/Reasonanddressup/)**
 
-- **`report/wardrobe-muse.html`**: the results report, with a scoreboard, temperature and prompt-order charts, a lookbook of the best outfits, planted-item examples and the judge comparison.
-- **`report/runway.html`**: an animated paper-doll runway that replays real looks. The model's notes type out, garments drop onto the doll, both judges raise score paddles, and the swap test is replayed with a *Defended it* / *Caught it* stamp.
+The `docs/` folder holds two self-contained pages built from the full run. Both are served by GitHub Pages and can also be opened locally by double-clicking:
+
+- **`docs/index.html`**: an animated paper-doll runway that replays real looks. The model's notes type out, garments drop onto the doll, both judges raise score paddles, and the swap test is replayed with a *Defended it* / *Caught it* stamp.
+- **`docs/report.html`**: the results report, with a scoreboard, temperature and prompt-order charts, a lookbook of the best outfits, planted-item examples and the judge comparison.
+
+`web/runway_template.html` is the empty template the runway is built from. Opened on its own, it only shows build instructions.
 
 ## Running it
 
@@ -106,8 +110,8 @@ python -m modal run modal_app.py::judge2 --gpu L40S --run results/full   # secon
 
 ```bash
 python analyze.py results/full          # tables, summary.json, metrics.csv
-python make_report.py results/full      # report/wardrobe-muse.html
-python make_runway.py results/full      # report/runway.html
+python make_report.py results/full      # docs/report.html
+python make_runway.py results/full      # docs/index.html
 ```
 
 `analyze.py --no-embed` skips the sentence-transformers fit score if you don't want to download the embedding model.
@@ -124,7 +128,8 @@ modal_app.py         Modal + vLLM GPU backend and run entry points
 analyze.py           metrics: validity, novelty, diversity, creative hits, faithfulness, judge agreement
 make_report.py       builds the HTML results report
 make_runway.py       builds the animated runway page from web/runway_template.html
-web/                 runway page template (vanilla JS + SVG, no build step)
+web/                 runway page template (vanilla JS + SVG, no framework)
+docs/                built demo pages served by GitHub Pages (index.html = runway, report.html = results)
 ```
 
 `pipeline.py` only needs a `generate_fn(model_id, requests) -> texts` function, so you can swap Modal for a local vLLM server or any other backend.

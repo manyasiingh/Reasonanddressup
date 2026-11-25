@@ -350,7 +350,7 @@ code {{ font:.85em var(--f-mono); }}
 </style>
 <div class="wrap">
 <header>
-  <span class="eyebrow">Dress-up game · LLM creativity &amp; reasoning study</span>
+  <span class="eyebrow">Dress-up game · LLM creativity &amp; reasoning study · <a href="index.html" style="color:inherit">watch the runway demo →</a></span>
   <h1>Wardrobe Muse</h1>
   <p class="lede">Five open-weight model setups played stylist with the same 69-item wardrobe and 12 briefs, from a law-firm interview to “dress as the feeling of a Sunday evening”. Every outfit is a set of item IDs, so creativity and rule-following can be measured exactly, and the stated reasoning can be tested against the actual choice.</p>
   <div class="facts"><span><b>{len(GEN):,}</b> outfits generated</span><span><b>{n_valid:,}</b> valid</span><span><b>4</b> temperatures × <b>2</b> prompt orders × <b>8</b> samples</span><span><b>{len(RAT)}</b> planted-item trials</span><span>vLLM on one L40S via Modal</span></div>
@@ -454,7 +454,7 @@ code {{ font:.85em var(--f-mono); }}
 </script>
 '''
 
-out = Path("report/wardrobe-muse.html")
+out = Path(sys.argv[2] if len(sys.argv) > 2 else "docs/report.html")
 out.parent.mkdir(exist_ok=True)
 out.write_text(page, encoding="utf-8")
 print(f"wrote {out} ({len(page)//1024} KB)")

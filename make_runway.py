@@ -103,7 +103,8 @@ data = {"items": {i: {"slot": it["slot"], "name": it["name"], "colors": it["colo
         "looks": looks, "swaps": swaps, "stats": stats}
 
 template = Path("web/runway_template.html").read_text(encoding="utf-8")
-out = Path("report/runway.html")
+out = Path(sys.argv[2] if len(sys.argv) > 2 else "docs/index.html")
 out.parent.mkdir(exist_ok=True)
-out.write_text(template.replace("__DATA__", json.dumps(data, ensure_ascii=False).replace("</", "<\\/")), encoding="utf-8")
+payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")  # safe inside a <script> block
+out.write_text(template.replace("__DATA__", payload, 1), encoding="utf-8")
 print(f"wrote {out}: {len(looks)} looks, {len(swaps)} swap tests")

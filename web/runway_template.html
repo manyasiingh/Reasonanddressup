@@ -126,7 +126,7 @@ footer { font:12px var(--f-mono); color:var(--mat-ink); max-width:80ch; }
   <header>
     <div>
       <h1>Wardrobe <em>Muse</em> Runway</h1>
-      <p class="sub">Replays of the real experiment. Five small language models styled the same paper doll from a 69-piece wardrobe, explained their choices, and were scored by two judge models.</p>
+      <p class="sub">Replays of the real experiment. Five small language models styled the same paper doll from a 69-piece wardrobe, explained their choices, and were scored by two judge models. <a href="report.html" style="color:var(--tape);font-weight:600">Read the full results report →</a></p>
     </div>
     <nav class="modes" aria-label="Show">
       <button id="m-runway" aria-pressed="true">Runway</button>
@@ -221,8 +221,19 @@ footer { font:12px var(--f-mono); color:var(--mat-ink); max-width:80ch; }
   <footer>Every look, note, score and swap on this page comes from the experiment logs (3,840 generated outfits, vLLM on a Modal L40S). Notes are shortened. Model names: Qwen3-8B with and without thinking, Qwen2.5-7B, Phi-4-mini and OLMo-2-7B.</footer>
 </div>
 
+<script type="application/json" id="runway-data">__DATA__</script>
 <script>
-const DATA = __DATA__;
+// The data block is filled in by make_runway.py. Opened unbuilt, show how to build it instead of a blank stage.
+let DATA = null;
+try { DATA = JSON.parse(document.getElementById("runway-data").textContent); } catch (e) { DATA = null; }
+if (!DATA) {
+  document.getElementById("v-stage").innerHTML =
+    '<div class="card" style="grid-column:1/-1;max-width:60ch"><div class="label">Template only</div>' +
+    '<p style="margin:.5rem 0 0">This is the page template without experiment data. Build the playable page with ' +
+    '<code>python make_runway.py results/full</code>, or open <code>docs/index.html</code>.</p></div>';
+  document.getElementById("ctrl").hidden = true;
+  throw new Error("runway template opened without data");
+}
 const CFG = {
   "qwen3-8b-think": {name:"Qwen3-8B", meta:"thinking on", c:"#3987e5"},
   "qwen3-8b": {name:"Qwen3-8B", meta:"thinking off", c:"#ff9a5c"},
