@@ -1,0 +1,5 @@
+# Local orchestration and analysis. GPU inference (vLLM) runs inside the Modal image defined in modal_app.py.
+modal>=1.0
+numpy>=1.26
+pandas>=2.1
+sentence-transformers>=3.0  # optional: embedding-based fit score in analyze.py (use --no-embed to skip)

@@ -1,0 +1,17 @@
+# experiment outputs (regenerate with the commands in the README)
+results/
+report/
+*_log.txt
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# os / editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
